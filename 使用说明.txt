@@ -1,0 +1,21 @@
+GOSTracker源自论文Global optimal searching for textureless 3d object tracking. The visual Computer, 2015.
+
+程序是在Visual Studio 11，用C++编写的，另外还依赖于OpenCV，freeglut（OpenGL）和LM库；
+LM库已经包含在目录下了，文件夹lib即是。
+所以需要去OpenCV网址上下载，我用的版本是2.4.6。
+当然，你可以自己创建一个工程，把相应的.h文件和.cpp文件拷贝到你自己的目录下，然后配置好环境即可。自己配置的时候，注意的是需要选择“多字节字符集”，而不是“Unicode字符集”。建议在Release下运行程序，Debug会比较慢！
+
+
+使用过程中：
+Param.h文件定义了3个宏
+
+#define R 150  //搜索线个数
+#define L 25   //搜索线长度
+
+#define MY   //求解算法用自己的或者OpenCV的
+
+其中R为算法每个采样点搜索线的个数，L为每个采样点搜索线的长度，改这两个值，可以改变速度，精度也会变化一下！
+如果定义宏MY，那么LM算法求解就用自己的，否则用OpenCV提供的求解。OpenCV求解的速度快，但精度不如自己求解的。
+
+另外，第一帧的姿态需要给定，在Main.cpp改pose参数即可，默认给定了bunny和cube的初始姿态。
+calibration参数也需要预先标定，可以采用OpenCV提供的棋盘格方法，这里没有给出。
