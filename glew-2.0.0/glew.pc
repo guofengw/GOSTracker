@@ -1,0 +1,11 @@
+prefix=C:/Program Files/OpenGL-Samples
+exec_prefix=${prefix}
+libdir=C:/Program Files/OpenGL-Samples/lib
+includedir=${prefix}/include
+
+Name: glew
+Description: The OpenGL Extension Wrangler library
+Version: 2.0.0
+Cflags: -I${includedir} 
+Libs: -L${libdir} -larc3d_glew
+Requires: glu
