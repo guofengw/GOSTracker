@@ -1,10 +1,10 @@
 #ifndef _OPTIMIZER_H
 #define _OPTIMIZER_H
+#include "Model.h"
+#include "Config.h"
 #include <opencv2\core\core.hpp>
 #include <opencv2\video\tracking.hpp>
 #include "PointSet.h"
-#include "Config.h"
-#include "Model.h"
 #include "Correspondence.h"
 #include <fstream>
 

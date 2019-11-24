@@ -4,7 +4,9 @@
 #if defined(__APPLE__) || defined(MACOSX)
 #include <GLUT/glut.h>
 #else
-#include <GL/freeglut.h>
+#include <Windows.h>
+#include <GL/GL.h>
+#include <GL/GLU.h>
 #endif
 
 

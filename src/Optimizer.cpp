@@ -1,4 +1,4 @@
-#include "stdafx.h"
+//#include "stdafx.h"
 #include "Optimizer.h"  //
 
 
@@ -8,7 +8,7 @@
 #include <opencv2\highgui\highgui.hpp>  //other project
 #include <opencv2\calib3d\calib3d.hpp>
 
-#include "levmar.h"  //Current project
+#include <levmar.h>  //Current project
 #include "Param.h"
 extern ols::CameraCalibration g_calibration;
 using namespace ols;
@@ -267,7 +267,8 @@ inline float durx(const cv::Mat& pose, const cv::Mat& pos)
 	float X = pos.at<float>(0,0); float Y = pos.at<float>(1,0); float Z = pos.at<float>(2,0);
 
 	//float result = -((Y*cos(rx)*cos(ry) - Z*cos(ry)*sin(rx))*(Z*(fx*(sin(rx)*sin(rz) + cos(rx)*cos(rz)*sin(ry)) + cx*cos(rx)*cos(ry)) + cx*t3 + fx*t1 - Y*(fx*(cos(rx)*sin(rz) - cos(rz)*sin(rx)*sin(ry)) - cx*cos(ry)*sin(rx)) - X*(cx*sin(ry) - fx*cos(ry)*cos(rz))) - (Y*(fx*(sin(rx)*sin(rz) + cos(rx)*cos(rz)*sin(ry)) + cx*cos(rx)*cos(ry)) + Z*(fx*(cos(rx)*sin(rz) - cos(rz)*sin(rx)*sin(ry)) - cx*cos(ry)*sin(rx)))*(t3 - X*sin(ry) + Z*cos(rx)*cos(ry) + Y*cos(ry)*sin(rx)))/std::pow((t3 - X*sin(ry) + Z*cos(rx)*cos(ry) + Y*cos(ry)*sin(rx)),2.0f);
-	float result = -((Y*(cos(rx)*cos(ry) - sin(rx)*sin(ry)*sin(rz)) - Z*(cos(ry)*sin(rx) + cos(rx)*sin(ry)*sin(rz)))*(cx*t3 + fx*t1 + X*(fx*cos(ry)*cos(rz) - cx*cos(rz)*sin(ry)) + Y*(cx*(cos(ry)*sin(rx) + cos(rx)*sin(ry)*sin(rz)) + fx*(sin(rx)*sin(ry) - cos(rx)*cos(ry)*sin(rz))) + Z*(cx*(cos(rx)*cos(ry) - sin(rx)*sin(ry)*sin(rz)) + fx*(cos(rx)*sin(ry) + cos(ry)*sin(rx)*sin(rz)))) - (Y*(cx*(cos(rx)*cos(ry) - sin(rx)*sin(ry)*sin(rz)) + fx*(cos(rx)*sin(ry) + cos(ry)*sin(rx)*sin(rz))) - Z*(cx*(cos(ry)*sin(rx) + cos(rx)*sin(ry)*sin(rz)) + fx*(sin(rx)*sin(ry) - cos(rx)*cos(ry)*sin(rz))))*(t3 + Y*(cos(ry)*sin(rx) + cos(rx)*sin(ry)*sin(rz)) + Z*(cos(rx)*cos(ry) - sin(rx)*sin(ry)*sin(rz)) - X*cos(rz)*sin(ry)))/std::pow((t3 + Y*(cos(ry)*sin(rx) + cos(rx)*sin(ry)*sin(rz)) + Z*(cos(rx)*cos(ry) - sin(rx)*sin(ry)*sin(rz)) - X*cos(rz)*sin(ry)),2.0f);
+	//float result = -((Y*(cos(rx)*cos(ry) - sin(rx)*sin(ry)*sin(rz)) - Z*(cos(ry)*sin(rx) + cos(rx)*sin(ry)*sin(rz)))*(cx*t3 + fx*t1 + X*(fx*cos(ry)*cos(rz) - cx*cos(rz)*sin(ry)) + Y*(cx*(cos(ry)*sin(rx) + cos(rx)*sin(ry)*sin(rz)) + fx*(sin(rx)*sin(ry) - cos(rx)*cos(ry)*sin(rz))) + Z*(cx*(cos(rx)*cos(ry) - sin(rx)*sin(ry)*sin(rz)) + fx*(cos(rx)*sin(ry) + cos(ry)*sin(rx)*sin(rz)))) - (Y*(cx*(cos(rx)*cos(ry) - sin(rx)*sin(ry)*sin(rz)) + fx*(cos(rx)*sin(ry) + cos(ry)*sin(rx)*sin(rz))) - Z*(cx*(cos(ry)*sin(rx) + cos(rx)*sin(ry)*sin(rz)) + fx*(sin(rx)*sin(ry) - cos(rx)*cos(ry)*sin(rz))))*(t3 + Y*(cos(ry)*sin(rx) + cos(rx)*sin(ry)*sin(rz)) + Z*(cos(rx)*cos(ry) - sin(rx)*sin(ry)*sin(rz)) - X*cos(rz)*sin(ry)))/std::pow((t3 + Y*(cos(ry)*sin(rx) + cos(rx)*sin(ry)*sin(rz)) + Z*(cos(rx)*cos(ry) - sin(rx)*sin(ry)*sin(rz)) - X*cos(rz)*sin(ry)),2.0f);
+	float result = (fx*(Y*(cos(rx)*sin(ry) + cos(ry)*sin(rx)*sin(rz)) - Z*(sin(rx)*sin(ry) - cos(rx)*cos(ry)*sin(rz)))) / (t3 + Y*(cos(ry)*sin(rx) + cos(rx)*sin(ry)*sin(rz)) + Z*(cos(rx)*cos(ry) - sin(rx)*sin(ry)*sin(rz)) - X*cos(rz)*sin(ry)) - (fx*(Y*(cos(rx)*cos(ry) - sin(rx)*sin(ry)*sin(rz)) - Z*(cos(ry)*sin(rx) + cos(rx)*sin(ry)*sin(rz)))*(t1 + Y*(sin(rx)*sin(ry) - cos(rx)*cos(ry)*sin(rz)) + Z*(cos(rx)*sin(ry) + cos(ry)*sin(rx)*sin(rz)) + X*cos(ry)*cos(rz))) / std::pow((t3 + Y*(cos(ry)*sin(rx) + cos(rx)*sin(ry)*sin(rz)) + Z*(cos(rx)*cos(ry) - sin(rx)*sin(ry)*sin(rz)) - X*cos(rz)*sin(ry)), 2);
 	return result;
 }
 
@@ -331,7 +332,8 @@ inline float duz(const cv::Mat& pose, const cv::Mat& pos)
 	float X = pos.at<float>(0,0); float Y = pos.at<float>(1,0); float Z = pos.at<float>(2,0);
 
 	//float result = -(Z*(fx*(sin(rx)*sin(rz) + cos(rx)*cos(rz)*sin(ry)) + cx*cos(rx)*cos(ry)) + cx*t3 - cx*(t3 - X*sin(ry) + Z*cos(rx)*cos(ry) + Y*cos(ry)*sin(rx)) + fx*t1 - Y*(fx*(cos(rx)*sin(rz) - cos(rz)*sin(rx)*sin(ry)) - cx*cos(ry)*sin(rx)) - X*(cx*sin(ry) - fx*cos(ry)*cos(rz)))/std::pow((t3 - X*sin(ry) + Z*cos(rx)*cos(ry) + Y*cos(ry)*sin(rx)),2.0f);
-	float result = -(cx*t3 + fx*t1 + X*(fx*cos(ry)*cos(rz) - cx*cos(rz)*sin(ry)) - cx*(t3 + Y*(cos(ry)*sin(rx) + cos(rx)*sin(ry)*sin(rz)) + Z*(cos(rx)*cos(ry) - sin(rx)*sin(ry)*sin(rz)) - X*cos(rz)*sin(ry)) + Y*(cx*(cos(ry)*sin(rx) + cos(rx)*sin(ry)*sin(rz)) + fx*(sin(rx)*sin(ry) - cos(rx)*cos(ry)*sin(rz))) + Z*(cx*(cos(rx)*cos(ry) - sin(rx)*sin(ry)*sin(rz)) + fx*(cos(rx)*sin(ry) + cos(ry)*sin(rx)*sin(rz))))/std::pow((t3 + Y*(cos(ry)*sin(rx) + cos(rx)*sin(ry)*sin(rz)) + Z*(cos(rx)*cos(ry) - sin(rx)*sin(ry)*sin(rz)) - X*cos(rz)*sin(ry)),2.0f);
+	//float result = -(cx*t3 + fx*t1 + X*(fx*cos(ry)*cos(rz) - cx*cos(rz)*sin(ry)) - cx*(t3 + Y*(cos(ry)*sin(rx) + cos(rx)*sin(ry)*sin(rz)) + Z*(cos(rx)*cos(ry) - sin(rx)*sin(ry)*sin(rz)) - X*cos(rz)*sin(ry)) + Y*(cx*(cos(ry)*sin(rx) + cos(rx)*sin(ry)*sin(rz)) + fx*(sin(rx)*sin(ry) - cos(rx)*cos(ry)*sin(rz))) + Z*(cx*(cos(rx)*cos(ry) - sin(rx)*sin(ry)*sin(rz)) + fx*(cos(rx)*sin(ry) + cos(ry)*sin(rx)*sin(rz))))/std::pow((t3 + Y*(cos(ry)*sin(rx) + cos(rx)*sin(ry)*sin(rz)) + Z*(cos(rx)*cos(ry) - sin(rx)*sin(ry)*sin(rz)) - X*cos(rz)*sin(ry)),2.0f);
+	float result = -(fx*(t1 + Y*(sin(rx)*sin(ry) - cos(rx)*cos(ry)*sin(rz)) + Z*(cos(rx)*sin(ry) + cos(ry)*sin(rx)*sin(rz)) + X*cos(ry)*cos(rz))) / std::pow((t3 + Y*(cos(ry)*sin(rx) + cos(rx)*sin(ry)*sin(rz)) + Z*(cos(rx)*cos(ry) - sin(rx)*sin(ry)*sin(rz)) - X*cos(rz)*sin(ry)), 2);
 	return result;
 }
 

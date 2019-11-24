@@ -2,7 +2,6 @@
 #ifndef _RENDER_H
 #define _RENDER_H
 
-#include <gl\freeglut.h>
 #include "glm.h"
 #include "CameraCalibration.h"
 #include <opencv2\core\core.hpp>

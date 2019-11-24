@@ -1,7 +1,12 @@
 #include "stdafx.h"
+
 #include "Render.h"
+#define FREEGLUT_STATIC
+#include <gl/freeglut.h>
+
 #include <iostream>
 #include <opencv2/highgui/highgui.hpp>
+
 using namespace osa;
 
 int Render::m_width;
@@ -45,16 +50,27 @@ void Render::init(CameraCalibration& calibration, int width, int height, int arg
 	glutInitDisplayMode(GLUT_RGBA|GLUT_DEPTH);
 	glutInitWindowPosition(0,0);
 	glutInitWindowSize(width,height);
-	glutCreateWindow("OpenGL");
+	int win = glutCreateWindow("OpenGL");
+	//glutCreateSubWindow(win, 0, 0, 640, 480);
 	glutDisplayFunc(display);
 	/*glutMouseFunc(mouse);
 	glutMotionFunc( mouseMovement );
-	glutKeyboardFunc(keyboard);*/
-	
+	glutKeyboardFunc(keyboard);*/	
+	glutInitContextVersion(4, 3);
+	glutInitContextProfile(GLUT_CORE_PROFILE);
+	glutInitContextFlags(GLUT_FORWARD_COMPATIBLE);
+	//glewInit();
+	//gl3wInit();
+	//gladLoadGL();
+	//int ok = gladLoadGLLoader((GLADloadproc)&glutGetProcAddress);
+	//printf("glad state: %d\n", ok==GL_TRUE);
 	eye[0] = 0.0; eye[1] = 0.0; eye[2] = 0.0;
 	at[0] = 0.0; at[1] = 0.0; at[2] = -50.0;
-	
 
+	printf("Vendor: %s\n", glGetString(GL_VENDOR));
+	printf("Renderer: %s\n", glGetString(GL_RENDERER));
+	printf("GL Version: %s\n", glGetString(GL_VERSION));
+	
 }
 
 void Render::reshape(int width, int height)
@@ -292,8 +308,8 @@ void Render::rendering()
 	m_shapePoseInfo.clear();
 	m_shapePoseInfo.push_back(poseInfo);*/
 	
-	glutDisplayFunc(display);
 	glutReshapeFunc(reshape);
+	glutDisplayFunc(display);
 	glutPostRedisplay();
 	glutMainLoopEvent();
 	

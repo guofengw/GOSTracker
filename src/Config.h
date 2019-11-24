@@ -1,7 +1,7 @@
 #ifndef _CONFIG_H
 #define _CONFIG_H
-#include "CameraCalibration.h"
 #include "glm.h"
+#include "CameraCalibration.h"
 #include <string>
 namespace ols
 {

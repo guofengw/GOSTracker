@@ -1,19 +1,22 @@
 // RegistrationByLS.cpp : 定义控制台应用程序的入口点。
 //
 
-#include "stdafx.h"
-#include "Config.h"
-#include "Optimizer.h"
-#include <iostream>
+//#include "stdafx.h"
 #include "Render.h"
+#include "Optimizer.h"
+#include "Config.h"
+#include <iostream>
 #include <iomanip>
 #include <fstream>
 #include <opencv2\highgui\highgui.hpp>
 
+
+
 osa::Render g_render;
 ols::CameraCalibration g_calibration;
 
-int _tmain(int argc, char* argv[])
+
+int main(int argc, char* argv[])
 {
 	float distorsion[5] = {-4.0817887112457034e-002, 4.2918200942843993e-001, 0., 0.,
 		-1.1326434091563919e+000};
@@ -23,7 +26,7 @@ int _tmain(int argc, char* argv[])
 	cv::VideoCapture capture;
 	
 	//输入视频数据
-	if(!(capture.open("data\\cube.avi")))
+	if(!(capture.open("bunny.avi")))
 	{
 		std::cout<<"can not find video!"<<std::endl;
 		return 0;
@@ -38,7 +41,7 @@ int _tmain(int argc, char* argv[])
 	config.camCalibration = calibration;
 	config.width = (int)capture.get(CV_CAP_PROP_FRAME_WIDTH);
 	config.height = (int)capture.get(CV_CAP_PROP_FRAME_HEIGHT);
-	config.filename = "./data/cube.obj";
+	config.filename = "bunny.obj";
 	config.model = glmReadOBJ(const_cast<char*>(config.filename.c_str()));
 
 	//打开opengl
@@ -49,12 +52,12 @@ int _tmain(int argc, char* argv[])
 
 	//初始姿态，需要预先给定
 	//bunny
-	/*pose.at<float>(0,0)=23.018f; pose.at<float>(0,1)=-24.497f; pose.at<float>(0,2)=412.035f;
-	pose.at<float>(0,3)=2.268f; pose.at<float>(0,4)=0.486f; pose.at<float>(0,5)=0.385;*/
+	pose.at<float>(0,0)=23.018f; pose.at<float>(0,1)=-24.497f; pose.at<float>(0,2)=412.035f;
+	pose.at<float>(0,3)=2.268f; pose.at<float>(0,4)=0.486f; pose.at<float>(0,5)=0.385;
 
 	//cube
-	pose.at<float>(0,0)=4.33f; pose.at<float>(0,1)=1.16; pose.at<float>(0,2)=25.95f;
-	pose.at<float>(0,3)=2.11f; pose.at<float>(0,4)=0.28f; pose.at<float>(0,5)=0.08;
+	/*pose.at<float>(0,0)=5.33f; pose.at<float>(0,1)=1.16; pose.at<float>(0,2)=25.95f;
+	pose.at<float>(0,3)=2.11f; pose.at<float>(0,4)=0.28f; pose.at<float>(0,5)=0.08;*/
 
 
 
