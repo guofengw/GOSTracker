@@ -28,7 +28,7 @@
  */
 
 /* specifies whether to use LAPACK or not. Using LAPACK is strongly recommended */
-#define HAVE_LAPACK
+/* #undef HAVE_LAPACK */
 
 /* specifies whether the PLASMA parallel library for multicore CPUs is available */
 /* #undef HAVE_PLASMA */

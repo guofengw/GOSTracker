@@ -4,7 +4,7 @@
 CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
 PROJECT(LEVMAR)
 
-SET(HAVE_LAPACK 1 CACHE BOOL "Do we have LAPACK/BLAS?")
+SET(HAVE_LAPACK 0 CACHE BOOL "Do we have LAPACK/BLAS?")
 # the directory where the lapack/blas/f2c libraries reside
 SET(LAPACKBLAS_DIR "/usr/lib" CACHE PATH "Path to lapack/blas libraries")
 SET(NEED_F2C 1 CACHE BOOL "Do we need either f2c or F77/I77?")
