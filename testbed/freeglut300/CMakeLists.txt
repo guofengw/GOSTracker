@@ -32,7 +32,7 @@ set(SO_REV 0)		# if nothing else changed increment this
 # FREEGLUT_BUILD_SHARED_LIBS is already a standard CMake variable, but we need to
 # re-declare it here so it will show up in the GUI.
 # by default, we want to build both
-OPTION(FREEGLUT_BUILD_SHARED_LIBS "Build FreeGLUT shared library." ON)
+OPTION(FREEGLUT_BUILD_SHARED_LIBS "Build FreeGLUT shared library." OFF)
 OPTION(FREEGLUT_BUILD_STATIC_LIBS "Build FreeGLUT static library." ON)
 
 # option for whether warnings and errors should be printed
@@ -441,7 +441,7 @@ INSTALL(FILES ${FREEGLUT_HEADERS} DESTINATION include/GL)
 
 
 # Optionally build demos, on by default.
-option( FREEGLUT_BUILD_DEMOS "Build FreeGLUT demos." ON )
+option( FREEGLUT_BUILD_DEMOS "Build FreeGLUT demos." OFF )
 
 SET(DEMO_LIBS ${OPENGL_glu_LIBRARY} ${LIBS})
 # lib m for math, not needed on windows
