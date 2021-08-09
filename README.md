@@ -1,3 +1,6 @@
+News！This work has been integrated into OpenCV contrib modules, see below for detail:
+https://github.com/opencv/opencv_contrib/tree/master/modules/rapid
+
 # GOSTracker
 Related Publication: 
 Guofeng Wang etc. Global Optimal Searching for Textureless 3D Object Tracking. 
